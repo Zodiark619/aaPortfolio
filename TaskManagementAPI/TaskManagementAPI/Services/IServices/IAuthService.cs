@@ -9,5 +9,6 @@ namespace TaskManagementAPI.Services.IServices
 
         Task<RegisterResponseDTO> RegisterAsync(RegisterRequestDTO registerRequestDto);
         Task<LoginResponseDTO?> LoginAsync(LoginRequestDTO loginRequestDto);
+        Task<IEnumerable<RoleDTO>> GetRolesAsync();
     }
 }

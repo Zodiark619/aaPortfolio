@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -14,11 +15,13 @@ namespace TaskManagementAPI.Services
     { 
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AuthService( UserManager<IdentityUser> userManager,IConfiguration configuration)
+        public AuthService( UserManager<IdentityUser> userManager,IConfiguration configuration,RoleManager<IdentityRole> roleManager)
         { 
             _userManager = userManager;
             _configuration = configuration;
+            _roleManager = roleManager;
         }
         private string GenerateJwtToken(IdentityUser user)
         {
@@ -69,11 +72,14 @@ namespace TaskManagementAPI.Services
                 return null;
              
             var token = GenerateJwtToken(user);
-             
+            var roles = await _userManager.GetRolesAsync(user);
+            var role = roles.FirstOrDefault();
             return new LoginResponseDTO
             {
                 Token = token,
-                Message="Login successful"
+                Message="Login successful",
+                Email=user.Email,
+                Role=role
             };
         }
 
@@ -124,6 +130,29 @@ namespace TaskManagementAPI.Services
             };
         }
 
-         
+
+        public async Task<IEnumerable<RoleDTO>> GetRolesAsync()
+        {
+            var roles = await _roleManager.Roles
+               .Select(role => new RoleDTO
+               {
+
+                   Name = role.Name!
+               })
+               .ToListAsync();
+
+            return  roles;
+        }
+
+
+
+
+
+
+
+
+
+
+
     }
 }

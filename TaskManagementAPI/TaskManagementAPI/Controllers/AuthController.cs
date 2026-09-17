@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using TaskManagementAPI.Models.DTO;
 using TaskManagementAPI.Services.IServices;
 
@@ -43,6 +45,14 @@ namespace TaskManagementAPI.Controllers
                 });
             return Ok(response);
 
+        }
+
+        [HttpGet("getRoles")]
+        public async Task<ActionResult<IEnumerable<RoleDTO>>> GetRoles()
+        {
+            var roles = await _authService.GetRolesAsync();
+
+            return Ok(roles);
         }
     }
 }
