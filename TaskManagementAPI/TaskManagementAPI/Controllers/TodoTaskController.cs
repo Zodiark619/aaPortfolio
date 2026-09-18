@@ -30,7 +30,7 @@ namespace TaskManagementAPI.Controllers
         //{
         //    return Ok("CREATE ENDPOINT REACHED");
         //}
-        [Authorize]
+        [Authorize(Roles ="Admin")]
         [HttpPost("create")]
 
         public async Task<IActionResult> Create(CreateTodoTaskDTO createTodoTaskDTO)
@@ -59,8 +59,7 @@ namespace TaskManagementAPI.Controllers
             if (userId == null)
                 return Unauthorized();
 
-            var result = await _taskService.GetAsync(toDoId,
-                userId
+            var result = await _taskService.GetAsync(toDoId 
                 
             );
             if (result == null)
@@ -72,7 +71,7 @@ namespace TaskManagementAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll(
     int page = 1,
-    int pageSize = 10)
+    int pageSize = 3)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -80,7 +79,7 @@ namespace TaskManagementAPI.Controllers
                 return Unauthorized();
 
             var result = await _taskService.GetAllAsync(
-                userId,
+               
                 page,
                 pageSize
             );

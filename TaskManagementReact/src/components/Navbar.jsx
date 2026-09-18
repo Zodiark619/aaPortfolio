@@ -7,7 +7,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark   ">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand " disabled>
           Navbar
         </a>
         <button
@@ -31,6 +31,15 @@ function Navbar() {
               to="/"
             >
               Home
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+              aria-current="page"
+              to="/task"
+            >
+              Task
             </NavLink>
           </div>
           <div className="navbar-nav ms-auto">

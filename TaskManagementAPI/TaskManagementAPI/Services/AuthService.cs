@@ -23,9 +23,11 @@ namespace TaskManagementAPI.Services
             _configuration = configuration;
             _roleManager = roleManager;
         }
-        private string GenerateJwtToken(IdentityUser user)
+        private async Task<string> GenerateJwtToken(IdentityUser user)
         {
-            var claims = new[]
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var claims = new List<Claim>
             {
         new Claim(
             ClaimTypes.NameIdentifier,
@@ -34,9 +36,12 @@ namespace TaskManagementAPI.Services
         new Claim(
             ClaimTypes.Email,
             user.Email!
-        )
-    };
-
+        ) 
+       };
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_configuration["Jwt:Secret"]!)
             );
@@ -71,7 +76,7 @@ namespace TaskManagementAPI.Services
             if (!passwordValid)
                 return null;
              
-            var token = GenerateJwtToken(user);
+            var token = await GenerateJwtToken(user);
             var roles = await _userManager.GetRolesAsync(user);
             var role = roles.FirstOrDefault();
             return new LoginResponseDTO

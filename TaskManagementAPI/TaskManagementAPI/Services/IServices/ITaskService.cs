@@ -8,13 +8,22 @@ namespace TaskManagementAPI.Services.IServices
     {
 
         Task<TodoTask> CreateTaskAsync(CreateTodoTaskDTO createTaskDTO, string userId);
-        Task<TodoTaskPagedResponse> GetAllAsync(
-               string userId,
+
+
+
+
+
+
+        Task<TodoTaskPagedResponse> GetAllAsync( 
                int page,
                int pageSize
             );
-        Task<TodoTaskResponseDTO?> GetAsync(int toDoId,
-               string userId 
+        
+        Task<TodoTaskResponseDTO?> GetAsync(int toDoId 
             );
+       
+
+
+
     }
 }
