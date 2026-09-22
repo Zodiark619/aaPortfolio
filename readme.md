@@ -9,7 +9,7 @@ Using EFCore Identity for Authentication and Authorization.
    ![Project Screenshot](./screenshot/CapstoneProject1MyResume/CapstoneProject1.png)
 
 2. Task Management React + API
-   ![Project Screenshot](./screenshot/TaskManagement/TodoTaskAPI_GetAllPaginationToDoTask.png)
+   ![Project Screenshot](./screenshot/TaskManagement/TodoTaskAPI_GetAllPaginationTodoTask.png)
    ![Project Screenshot](./screenshot/TaskManagement/TodoTaskReact_TaskTablePagination.png)
 
 ## 📦 Installation
