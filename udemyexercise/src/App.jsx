@@ -1,29 +1,20 @@
-import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router";
+import Home from "./pages/Home.jsx";
+import CapstoneProject1 from "./CapstoneProject1/CapstoneProject1.jsx";
+import Navbar from "./components/Navbar.jsx";
+import CapstoneProject1Contact from "./CapstoneProject1/CapstoneProject1Contact.jsx";
 
-const App = () => {
-  const stars = Array.from({ length: 5 }, (_, i) => i + 1);
-  const [rating, setRating] = useState(0);
-  const [hover, setHover] = useState(0);
+function App() {
   return (
-    <>
-      <div className="rating-container">
-        <h1 className="">Rate your experience</h1>
-        <div className="stars">
-          {stars.map((star) => (
-            <span
-              onClick={() => setRating(star)}
-              onMouseEnter={() => setHover(star)}
-              onMouseLeave={() => setHover(0)}
-              className={`star ${star <= (hover || rating) ? "active" : ""}`}
-              key={star}
-            >
-              {"\u2605"}
-            </span>
-          ))}
-        </div>
-      </div>
-    </>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/capstone1" element={<CapstoneProject1 />} />
+        <Route path="/capstone1contact" element={<CapstoneProject1Contact />} />
+      </Routes>
+    </BrowserRouter>
   );
-};
+}
 
 export default App;

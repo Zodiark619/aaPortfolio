@@ -11,12 +11,12 @@ const Task = () => {
   const [pageSize, setPageSize] = useState(3);
   useEffect(() => {
     const fetchTasks = async () => {
-      const data = await getAll(user.token, page, pageSize);
+      const data = await getAll(page, pageSize);
       setTasks(data);
     };
 
     fetchTasks();
-  }, [user.token, page, pageSize]);
+  }, [page, pageSize]);
   return (
     <>
       <div>

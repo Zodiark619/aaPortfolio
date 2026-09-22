@@ -3,12 +3,15 @@ import { login } from "../api/auth";
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
   const loginContext = async (email, password) => {
     const data = await login(email, password);
-
     setUser(data);
+    localStorage.setItem("user", JSON.stringify(data));
 
     return data;
   };

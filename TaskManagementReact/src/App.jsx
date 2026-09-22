@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Task from "./pages/Task";
+import NotFound from "./pages/NotFound";
+import TaskSingle from "./pages/TaskSingle";
 
 {
   /* <Route path="/about" element={<About />} />
@@ -20,6 +22,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/task" element={<Task />} />
+          <Route path="/task/:id" element={<TaskSingle />} />
+
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </div>
     </BrowserRouter>
