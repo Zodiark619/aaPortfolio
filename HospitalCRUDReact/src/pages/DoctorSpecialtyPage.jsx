@@ -1,0 +1,158 @@
+import { useEffect, useReducer, useState } from "react";
+import PageHeader from "../components/PageHeader";
+import FilterSearch from "../components/FilterSearch";
+import Table from "../components/Table";
+import {
+  createDoctorSpecialty,
+  deleteDoctorSpecialty,
+  getDoctorSpecialties,
+  updateDoctorSpecialty,
+} from "../api/doctorSpecialtyApi";
+import Pagination from "../components/Pagination";
+import Modal from "../components/Modal";
+import { toast } from "react-toastify";
+import { initialState, reducer } from "../reducer/reducer";
+
+////////////////// constants
+const modalFields = [
+  {
+    key: "name",
+    label: "Name",
+    type: "text",
+    required: true,
+  },
+];
+
+const columns = [{ key: "name", label: "Name" }];
+const title = "Doctor Specialty";
+//
+
+const DoctorSpecialtyPage = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    loadDoctorSpecialties(1);
+  }, []);
+  const loadDoctorSpecialties = async (pageNumber) => {
+    dispatch({
+      type: "LOAD_START",
+    });
+
+    try {
+      const data = await getDoctorSpecialties({
+        page: pageNumber,
+        pageSize: state.pagination.pageSize,
+        search: state.search.trim(),
+      });
+
+      dispatch({
+        type: "LOAD_SUCCESS",
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: "LOAD_ERROR",
+        payload: error.message,
+      });
+    }
+  };
+  //pageheader
+  const handleCreate = () => {
+    dispatch({
+      type: "OPEN_CREATE",
+    });
+  };
+
+  //////////filtersearch
+
+  const handleChange = (e) => {
+    dispatch({
+      type: "SET_SEARCH",
+      payload: e.target.value,
+    });
+  };
+
+  const handleSearchClick = async () => {
+    if (state.search.trim().length > 1) {
+      toast.success(`Searching "${state.search.trim()}"`);
+    }
+    await loadDoctorSpecialties(1);
+  };
+  /////table
+  const handleEdit = (doctorSpecialty) => {
+    dispatch({
+      type: "OPEN_EDIT",
+      payload: doctorSpecialty,
+    });
+  };
+  const handleDelete = async (id) => {
+    try {
+      await deleteDoctorSpecialty(id);
+      toast.success(`Successfully deleted!`);
+
+      await loadDoctorSpecialties(1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  //////modal
+  const handleSubmitModal = async (doctorSpecialty) => {
+    try {
+      if (state.modal.selectedItem == null) {
+        await createDoctorSpecialty(doctorSpecialty);
+
+        toast.success(`"${doctorSpecialty.name}" successfully created!`);
+      } else {
+        await updateDoctorSpecialty(doctorSpecialty.id, doctorSpecialty);
+
+        toast.success(`"${doctorSpecialty.name}" successfully updated!`);
+      }
+
+      dispatch({
+        type: "CLOSE_MODAL",
+      });
+
+      await loadDoctorSpecialties(1);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const onClose = () => {
+    dispatch({
+      type: "CLOSE_MODAL",
+    });
+  };
+
+  return (
+    <>
+      <PageHeader title={title} handleCreate={handleCreate} />
+      <FilterSearch
+        handleChange={handleChange}
+        handleSearchClick={handleSearchClick}
+        name={state.search}
+        // name={name}
+      />
+      <Table
+        columns={columns}
+        data={state.data}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
+      />
+      <Pagination
+        pagination={state.pagination}
+        loadDoctorSpecialties={loadDoctorSpecialties}
+      />
+      {state.modal.show && (
+        <Modal
+          modalFields={modalFields}
+          selectedItem={state.modal.selectedItem}
+          onSubmit={handleSubmitModal}
+          onClose={onClose}
+          title={title}
+        />
+      )}
+    </>
+  );
+};
+
+export default DoctorSpecialtyPage;

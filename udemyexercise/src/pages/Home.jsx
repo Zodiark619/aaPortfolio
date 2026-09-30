@@ -1,11 +1,16 @@
-import PageTitle from "../components/PageTitle";
+import Accordion from "../exercise/components/Accordion";
+import KanbanBoard from "../exercise/pages/DndKit/KanbanBoard";
+import DropdownPage from "../exercise/pages/DropdownPage";
+import "./home.css";
 
 const Home = () => {
   return (
     <>
-      <PageTitle />
-
-      <div>Home</div>
+      <div>
+        <DropdownPage />
+        <hr></hr>
+        {/*   <KanbanBoard /> */}
+      </div>
     </>
   );
 };

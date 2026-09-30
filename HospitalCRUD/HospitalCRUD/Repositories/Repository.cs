@@ -1,0 +1,71 @@
+﻿using HospitalCRUD.Data;
+using HospitalCRUD.Repositories.IRepositories;
+using Microsoft.EntityFrameworkCore;
+
+namespace HospitalCRUD.Repositories
+{
+    public class Repository<T> : IRepository<T> where T : class
+    {
+        protected readonly AppDbContext _context;
+        protected readonly DbSet<T> _dbSet;
+
+        public Repository(AppDbContext context)
+        {
+            _context = context;
+            _dbSet = context.Set<T>();
+        }
+
+        public async Task<List<T>> GetAllAsync()
+        {
+            return await _dbSet.ToListAsync();
+        }
+
+        public async Task<T?> GetByIdAsync(int id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+
+        public async Task AddAsync(T entity)
+        {
+            await _dbSet.AddAsync(entity);
+        }
+
+        public void Update(T entity)
+        {
+            _dbSet.Update(entity);
+        }
+
+        public void Delete(T entity)
+        {
+            _dbSet.Remove(entity);
+        }
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync();
+        }
+
+    //    public async Task<List<T>> GetAllPaginationAsync(
+    //int page,
+    //int pageSize)
+    //    {
+            
+    //        return await _dbSet
+    //            .Skip((page - 1) * pageSize)
+    //            .Take(pageSize)
+    //            .ToListAsync();
+    //    }
+
+        //public async Task<int> GetCountAsync(string? search)
+        //{
+        //    //  return await _dbSet.CountAsync();
+        //    var query = _dbSet.AsQueryable();
+
+        //    if (!string.IsNullOrWhiteSpace(search))
+        //    {
+        //        query = query.Where(x => x.Name.Contains(search));
+        //    }
+
+        //    return await query.CountAsync();
+        //}
+    }
+}
