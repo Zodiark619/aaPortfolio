@@ -40,6 +40,33 @@ function Navbar() {
             >
               Doctor
             </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+              aria-current="page"
+              to="/Province"
+            >
+              Province
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+              aria-current="page"
+              to="/Patient"
+            >
+              Patient
+            </NavLink>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+              aria-current="page"
+              to="/Admission"
+            >
+              Admission
+            </NavLink>
             {/* <NavLink
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"

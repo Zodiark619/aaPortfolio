@@ -49,11 +49,13 @@ const DoctorSpecialtyPage = () => {
         type: "LOAD_SUCCESS",
         payload: data,
       });
+      return data;
     } catch (error) {
       dispatch({
         type: "LOAD_ERROR",
         payload: error.message,
       });
+      throw error;
     }
   };
   //pageheader
@@ -72,11 +74,17 @@ const DoctorSpecialtyPage = () => {
     });
   };
 
+  // if (state.search.trim().length > 1) {
+  //   toast.success(`Searching "${state.search.trim()}"`);
+  // }
   const handleSearchClick = async () => {
-    if (state.search.trim().length > 1) {
-      toast.success(`Searching "${state.search.trim()}"`);
+    const data = await loadDoctorSpecialties(1);
+    if (data.totalCount > 0) {
+      console.log(data.totalCount);
+      toast.success(
+        `Found ${data.totalCount} doctor ${data.totalCount === 1 ? "specialty" : "specialties"}`,
+      );
     }
-    await loadDoctorSpecialties(1);
   };
   /////table
   const handleEdit = (doctorSpecialty) => {
@@ -137,10 +145,11 @@ const DoctorSpecialtyPage = () => {
         data={state.data}
         handleEdit={handleEdit}
         handleDelete={handleDelete}
+        rowKey={"id"}
       />
       <Pagination
         pagination={state.pagination}
-        loadDoctorSpecialties={loadDoctorSpecialties}
+        loadData={loadDoctorSpecialties}
       />
       {state.modal.show && (
         <Modal

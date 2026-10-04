@@ -1,4 +1,4 @@
-const Pagination = ({ pagination, loadDoctorSpecialties }) => {
+const Pagination = ({ pagination, loadData }) => {
   return (
     <>
       {pagination.totalCount > 0 && (
@@ -10,7 +10,7 @@ const Pagination = ({ pagination, loadDoctorSpecialties }) => {
             >
               <button
                 className="page-link"
-                onClick={() => loadDoctorSpecialties(pagination.page - 1)}
+                onClick={() => loadData(pagination.page - 1)}
                 disabled={pagination.page === 1}
               >
                 «
@@ -28,7 +28,7 @@ const Pagination = ({ pagination, loadDoctorSpecialties }) => {
               >
                 <button
                   className="page-link"
-                  onClick={() => loadDoctorSpecialties(pageNumber)}
+                  onClick={() => loadData(pageNumber)}
                 >
                   {pageNumber}
                 </button>
@@ -43,7 +43,7 @@ const Pagination = ({ pagination, loadDoctorSpecialties }) => {
             >
               <button
                 className="page-link"
-                onClick={() => loadDoctorSpecialties(pagination.page + 1)}
+                onClick={() => loadData(pagination.page + 1)}
                 disabled={pagination.page === pagination.totalPages}
               >
                 »

@@ -16,11 +16,11 @@ namespace HospitalCRUD.Services
         }
 
         
-        public async Task<IEnumerable<DoctorSpecialtyDTO>> GetAllDropdownAsync()
+        public async Task<IEnumerable<DropdownDTO>> GetAllDropdownAsync()
         {
             var specialties = await _repository.GetAllAsync();
 
-            return specialties.Select(x => new DoctorSpecialtyDTO
+            return specialties.Select(x => new DropdownDTO
             {
                 Id = x.Id,
                 Name = x.Name
@@ -55,7 +55,7 @@ namespace HospitalCRUD.Services
                     totalCount / (double)request.PageSize
                 )
             };
-        }
+        }   
         public async Task<DoctorSpecialtyDTO?> GetByIdAsync(int id)
         {
             var dbModel = await _repository.GetByIdAsync( id  );

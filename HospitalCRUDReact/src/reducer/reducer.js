@@ -4,6 +4,10 @@ const initialState = {
   loading: false,
   error: null,
   doctorSpecialties: [],
+  provinces: [],
+  patients: [],
+  doctors: [],
+
   pagination: {
     page: 1,
     pageSize: 5,
@@ -19,10 +23,25 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "LOAD_DOCTORS_SUCCESS":
+      return {
+        ...state,
+        doctors: action.payload,
+      };
+    case "LOAD_PATIENTS_SUCCESS":
+      return {
+        ...state,
+        patients: action.payload,
+      };
     case "LOAD_SPECIALTIES_SUCCESS":
       return {
         ...state,
         doctorSpecialties: action.payload,
+      };
+    case "LOAD_PROVINCES_SUCCESS":
+      return {
+        ...state,
+        provinces: action.payload,
       };
     case "SET_SEARCH":
       return {

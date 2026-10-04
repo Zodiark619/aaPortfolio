@@ -17,6 +17,14 @@ namespace HospitalCRUD.Controllers
         {
             _doctorService = doctorService;
         }
+        [HttpGet("dropdown")]
+        public async Task<IActionResult> GetAllDropdown()
+        {
+
+            var result = await _doctorService.GetAllDropdownAsync();
+
+            return Ok(result);
+        }
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] PaginationRequest paginationRequest)
         {

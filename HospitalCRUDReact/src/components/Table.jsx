@@ -1,4 +1,16 @@
-const Table = ({ data, columns, handleEdit, handleDelete }) => {
+const formatValue = (value, type) => {
+  if (value == null) {
+    return "-";
+  }
+
+  if (type === "date") {
+    return new Date(value).toLocaleDateString();
+  }
+
+  return value;
+};
+
+const Table = ({ data, columns, handleEdit, handleDelete, rowKey = "id" }) => {
   return (
     <div className="card">
       <div className="card-body p-0">
@@ -24,13 +36,18 @@ const Table = ({ data, columns, handleEdit, handleDelete }) => {
                 </tr>
               ) : (
                 data.map((item, index) => (
-                  <tr key={item.id}>
+                  <tr key={item[rowKey]}>
+                    {/* <tr key={item.id}> */}
                     <td>{index + 1}</td>
 
+                    {/* {columns.map((column) => (
+                      <td key={column.key}>{item[column.key] ?? "-"}</td>
+                    ))} */}
                     {columns.map((column) => (
-                      <td key={column.key}>{item[column.key]}</td>
+                      <td key={column.key}>
+                        {formatValue(item[column.key], column.type)}
+                      </td>
                     ))}
-
                     <td className="text-end">
                       <button
                         className="btn btn-sm btn-outline-primary me-2"
@@ -42,7 +59,8 @@ const Table = ({ data, columns, handleEdit, handleDelete }) => {
 
                       <button
                         className="btn btn-sm btn-outline-danger"
-                        onClick={() => handleDelete(item.id)}
+                        onClick={() => handleDelete(item[rowKey])}
+                        // onClick={() => handleDelete(item.id)}
                         type="button"
                       >
                         Delete

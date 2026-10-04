@@ -6,6 +6,8 @@ namespace HospitalCRUD.Repositories.IRepositories
     {
         IRepository<Doctor> Doctors { get; }
         IRepository<DoctorSpecialty> DoctorSpecialties { get; }
+        IRepository<Province> Provinces { get; }
+        IRepository<Patient> Patients { get; }
 
         Task<int> SaveChangesAsync();
     }

@@ -1,6 +1,6 @@
 import api from "./axios";
 
-export const getDoctor = async (queryParams = {}) => {
+export const getDoctors = async (queryParams = {}) => {
   const response = await api.get("/Doctor", {
     params: queryParams,
   });
@@ -25,4 +25,8 @@ export const updateDoctor = async (id, doctor) => {
 
 export const deleteDoctor = async (id) => {
   await api.delete(`/Doctor/${id}`);
+};
+export const getDoctorDropdown = async () => {
+  const response = await api.get(`/Doctor/dropdown`);
+  return response.data;
 };

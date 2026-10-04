@@ -18,6 +18,6 @@ namespace HospitalCRUD.Services.IServices
         Task<bool> DeleteAsync(int id);
 
 
-        Task<IEnumerable<DoctorSpecialtyDTO>> GetAllDropdownAsync();
+        Task<IEnumerable<DropdownDTO>> GetAllDropdownAsync();
     }
 }
