@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import HomePage from "./pages/HomePage";
+import DoctorSpecialtyPage2 from "./pages/v2/DoctorSpecialtyPage2";
 const App = () => {
   return (
     <>
@@ -21,7 +22,7 @@ const App = () => {
         <div className=" container mt-5">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/doctorSpecialty" element={<DoctorSpecialtyPage />} />
+            <Route path="/doctorSpecialty" element={<DoctorSpecialtyPage2 />} />
             <Route path="/doctor" element={<DoctorPage />} />
             <Route path="/province" element={<ProvincePage />} />
             <Route path="/patient" element={<PatientPage />} />

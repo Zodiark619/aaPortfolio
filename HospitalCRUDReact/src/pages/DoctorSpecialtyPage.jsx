@@ -12,7 +12,21 @@ import Pagination from "../components/Pagination";
 import Modal from "../components/Modal";
 import { toast } from "react-toastify";
 import { initialState, reducer } from "../reducer/reducer";
+import { useQuery } from "@tanstack/react-query";
+// const fetchDoctorSpecialties = async ({ queryKey }) => {
+//   const {data,isLoading,isError,error} =  useQuery({
 
+//   queryKey: ["doctorSpecialties"] ,
+// queryFn:getDoctorSpecialties
+// });
+// if(isloading){
+//   return "Loading...";
+// }
+// if(isError){
+//   return <p>{error.message}</p>>
+// }
+//   return data;
+// }
 ////////////////// constants
 const modalFields = [
   {
@@ -28,6 +42,13 @@ const title = "Doctor Specialty";
 //
 
 const DoctorSpecialtyPage = () => {
+  const doctorSpecialtyCrud = useCrud("doctorSpecialties", {
+    createDoctorSpecialty,
+    deleteDoctorSpecialty,
+    getDoctorSpecialties,
+    updateDoctorSpecialty,
+  });
+
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
