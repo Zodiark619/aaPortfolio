@@ -1,7 +1,8 @@
 import { Link, NavLink } from "react-router";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
-  // const { user, logout } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-dark   ">
@@ -67,18 +68,9 @@ function Navbar() {
             >
               Admission
             </NavLink>
-            {/* <NavLink
-              className={({ isActive }) =>
-                isActive ? "nav-link active" : "nav-link"
-              }
-              aria-current="page"
-              to="/task"
-            >
-              Task
-            </NavLink> */}
           </div>
           <div className="navbar-nav ms-auto">
-            {/* {user ? (
+            {user ? (
               <>
                 <span className="navbar-text me-3">
                   {user.email} - {user.role}
@@ -107,7 +99,7 @@ function Navbar() {
                   Register
                 </NavLink>
               </>
-            )} */}
+            )}
           </div>
         </div>
       </div>

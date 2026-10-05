@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { login } from "../api/auth";
+import { login } from "../api/authApi";
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
